@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomchat</title>
+    <link rel="stylesheet"  href="/stylesheets/index.css">
+</head>
+<body>
+
+    <nav id="navbar" >
+      <h2 id="navbrand" >VIDCHAT</h2>
+      <p id="navp">Random one - one video chat</p>
+    </nav>
+
+    <div  id="videos">
+        <div class="video-view">
+          <div id="local_stream" class="video-placeholder"></div>
+          <div id="local_video_info" class="video-profile hide"></div>
+          <div id="video_autoplay_local" class="autoplay-fallback hide"></div>
+        </div>
+        <div id = "remoteVideo">
+
+        </div>
+      </div>
+    
+    <a href="#" id="connect" class="btn">Connect Randomly</a>
+    <a href="#" id ="disconnect" class="btn">Disconnect</a>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
+<script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.1.0.js"></script>
+<script src="/scripts/script.js"></script>
+</body>
+</html>
