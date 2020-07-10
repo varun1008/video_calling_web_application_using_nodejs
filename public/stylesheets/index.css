@@ -58,3 +58,19 @@ body{
 	text-decoration: none;
 	color: white;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .video-view{
+        width: 200px;
+        height: 200px;
+        margin: 30px 100px;
+    }
+    
+    .video-placeholder{
+        width: 200px;
+        height:200px;
+        border:5px solid black;
+    }
+    
+  }
