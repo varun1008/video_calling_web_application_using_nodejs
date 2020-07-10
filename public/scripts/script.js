@@ -1,30 +1,23 @@
 
 
 $( "#disconnect" ).hide();
+$("#searching").hide();
 
 function addView(id) {
-    if (!$("#" + id)[0]) {
-      $("<div/>", {
-        id: "remote_video_panel_" + id,
-        class: "video-view",
-      }).appendTo("#remoteVideo");
+  {if($("#remoteVideo > div").length === 0){
+          $("<div/>", {
+            id: "remote_video_panel_" + id,
+            class: "video-view",
+          }).appendTo("#remoteVideo");
 
-      $("<div/>", {
-        id: "remote_video_" + id,
-        class: "video-placeholder",
-      }).appendTo("#remote_video_panel_" + id);
-
-      $("<div/>", {
-        id: "remote_video_info_" + id,
-        class: "video-profile hide"
-      }).appendTo("#remote_video_panel_" + id);
-
-      $("<div/>", {
-        id: "video_autoplay_"+ id,
-        class: "autoplay-fallback hide",
-      }).appendTo("#remote_video_panel_" + id);
-    }
-  }
+          $("<div/>", {
+            id: "remote_video_" + id,
+            class: "video-placeholder",
+          }).appendTo("#remote_video_panel_" + id);
+        
+      }
+  }}
+    
 
   function removeView(id) {
     $( "#remote_video_"+id ).remove();
@@ -55,6 +48,7 @@ document.getElementById("connect").onclick = () =>{
 
             $( "#disconnect" ).show();
             $( "#connect" ).hide();
+            $( "#searching" ).show("slow");   
 
            // Create a client
             rtc.client = AgoraRTC.createClient({mode: "rtc", codec: "h264"});
@@ -89,14 +83,20 @@ document.getElementById("connect").onclick = () =>{
                             console.log("publish failed");
                             console.error(err);
                         });
+
+                        
+
                     }, function (err) {
                         console.error("init local stream failed ", err);
                     });
+
+                     
 
             }, function(err) {
                 console.error("client join failed", err);
             });
 
+            
 
             rtc.client.on("stream-added", function (evt) {  
                 var remoteStream = evt.stream;
@@ -112,6 +112,7 @@ document.getElementById("connect").onclick = () =>{
             rtc.client.on("stream-subscribed", function (evt) {
                 var remoteStream = evt.stream;
                 var id = remoteStream.getId();
+                $("#searching").hide();   
                 // Add a view for the remote stream.
                 addView(id);
                 // Play the remote stream.
