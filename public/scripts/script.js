@@ -154,6 +154,7 @@ document.getElementById("disconnect").onclick = () =>{
 
                     $( "#disconnect" ).hide();
                     $( "#connect" ).show();
+                    $("#searching").hide();   
                 }, function (err) {
                     console.log("channel leave failed");
                     console.error(err);
