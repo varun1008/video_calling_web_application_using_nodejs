@@ -178,6 +178,7 @@ document.getElementById("connect").onclick = () =>{
                 $("#remoteVideo").empty();
                 $("#disconnect").trigger("click"); 
                 $("#dis").show("slow");
+                setTimeout(() => window.location.reload(), 2000);
               }
               })
 
@@ -207,6 +208,7 @@ document.getElementById("disconnect").onclick = () =>{
                     $( "#disconnect" ).hide();
                     $( "#connect" ).show();
                     $("#searching").hide();   
+        
                 }, function (err) {
                     console.log("channel leave failed");
                     console.error(err);

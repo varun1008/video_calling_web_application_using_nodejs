@@ -42,7 +42,7 @@ app.post("/channelClose/:id/:cid",(req,res) =>{
     var updateChannel = { $set : {"channels.$[channelFilter].u1" : true,
                                     "channels.$[channelFilter].u2" : true}};
 
-    db.channel.findOneAndUpdate({"_id":req.params.id},updateChannel,{"arrayFilters":[{"channelFilter._cid":req.params.channel}] , new : true})
+    db.channel.findOneAndUpdate({"_id":req.params.id},updateChannel,{"arrayFilters":[{"channelFilter._id":req.params.cid}] , new : true})
     .then( channel =>{
         res.json(channel)
     })
