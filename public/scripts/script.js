@@ -1,7 +1,7 @@
 
-
 $( "#disconnect" ).hide();
 $("#searching").hide();
+$("#dis").hide();
 
 function addView(id) {
   {if($("#remoteVideo > div").length === 0){
@@ -34,14 +34,51 @@ var rtc = {
     remoteStreams: [],
     params: {}
   };
+
+
+  $.ajax({
+    url : "/channels",
+    async: false
+  })
+  .then(createChannel)
+  .catch(function(){
+    console.log("Cannot conect to server");
+  })  
+
+  let arr;
+  let id;
+  function createChannel(ch){
+    ch.forEach(e => {
+         id = e._id; 
+         let arr2 =  e.channels.filter( cc =>{
+           return (cc.u1===false && cc.u2 ===true )
+         })
+         arr = arr2
+                  if(arr2.length === 0){
+                      ch.forEach(nc=>{
+                          let arr3 = e.channels.filter( ncc =>{
+                              return (ncc.u1 ===true && ncc.u2 === true)
+                          })
+                        arr = arr3  
+                      })
+                    $.post("/channel1/"+id+"/"+arr[0]._id ,{})   
+                  }else{
+                    $.post("/channel2/"+id+"/"+arr[0]._id ,{})
+                  }
+    });
+    option.channel = arr[0].name;
+  }
+
+
+    // Options for joining a channel
+    var option = {
+      appID: "ee8d9b7b869f4c66ab5278f1564bb6ec",
+      channel: null,
+      uid: null,
+      token: null
+    };  
   
-  // Options for joining a channel
-  var option = {
-    appID: "ee8d9b7b869f4c66ab5278f1564bb6ec",
-    channel: "Random Chat",
-    uid: null,
-    token: null
-  };
+
 
 
 document.getElementById("connect").onclick = () =>{
@@ -49,6 +86,8 @@ document.getElementById("connect").onclick = () =>{
             $( "#disconnect" ).show();
             $( "#connect" ).hide();
             $( "#searching" ).show("slow");   
+            $("#dis").hide();
+
 
            // Create a client
             rtc.client = AgoraRTC.createClient({mode: "rtc", codec: "h264"});
@@ -59,6 +98,8 @@ document.getElementById("connect").onclick = () =>{
             }, (err) => {
             console.error(err);
             });
+
+
 
             // Join a channel
             rtc.client.join(option.token, option.channel, option.uid, function (uid) {
@@ -127,15 +168,26 @@ document.getElementById("connect").onclick = () =>{
             removeView(id);
             // Stop playing the remote stream.
             remoteStream.stop("remote_video_" + id);
-            
             console.log("stream-removed remote-uid: ", id);
             });
+
+            rtc.client.on("peer-leave", function(evt) {
+              var peerStream = evt.stream;
+              if(peerStream && peerStream.isPlaying()) {
+                peerStream.stop()
+                $("#remoteVideo").empty();
+                $("#disconnect").trigger("click"); 
+                $("#dis").show("slow");
+              }
+              })
 
 
 }
 
 
 document.getElementById("disconnect").onclick = () =>{
+
+                 $.post("/channelClose/"+id+"/"+arr[0]._id ,{}) 
                     // Leave the channel
                 rtc.client.leave(function () {
                     // Stop playing the local stream
