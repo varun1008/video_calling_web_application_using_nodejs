@@ -142,9 +142,13 @@ body{
   #searching{
       display: flex;  
       margin:0px 100px;
+      
   }
 
   #dis{
     color: white;
     margin:10px 100px;
+    display: none;
   }
+
+ 
