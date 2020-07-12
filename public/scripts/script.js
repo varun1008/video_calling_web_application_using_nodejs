@@ -59,7 +59,7 @@ var rtc = {
 
 // Options for joining a channel
 var option = {
-      appID: "ee8d9b7b869f4c66ab5278f1564bb6ec",
+      appID: "***********************************",
       channel: null,
       uid: null,
       token: null
